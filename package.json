@@ -1,0 +1,39 @@
+{
+  "name": "zmq-pubsub",
+  "version": "0.0.1",
+  "author": "Horsed",
+  "description": "Publisher, subscriber and broker based on node-zmq",
+  "private": false,
+  "scripts": {
+    "test": "mocha"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Horsed/zmq-pubsub.git"
+  },
+  "keywords": [
+    "zeromq",
+    "pub/sub",
+    "json",
+    "broker",
+    "publisher",
+    "subscriber"
+  ],
+  "dependencies": {
+    "zmq": "~2.5.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-develop": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "time-grunt": "~0.1.1",
+    "load-grunt-tasks": "~0.2.0",
+    "mocha": "~1.15.0",
+    "requirejs": "~2.1.9",
+    "should": "~2.1.0"
+  }
+}
