@@ -20,7 +20,7 @@ describe('subscribing', function() {
     pub.connect('tcp://127.0.0.1:5000');
 
     setTimeout(function() {
-      pub.send('event is cool');
+      pub.send('event cool stuff');
     }, 100.0);
     
   });
