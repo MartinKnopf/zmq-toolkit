@@ -1,7 +1,7 @@
-zmq-pubsub
+zmq-pubsub [![Build Status](https://secure.travis-ci.org/Horsed/zmq-pubsub.png)](http://travis-ci.org/Horsed/zmq-pubsub)
 ==========
 
-Brokered pub/sub based on [zeromq](http://zeromq.org/) and [node-zmq](https://github.com/JustinTulloss/zeromq.node) with handling of JSON messages.
+Brokered pub/sub via **TCP** based on [zeromq](http://zeromq.org/) and [node-zmq](https://github.com/JustinTulloss/zeromq.node) with handling of JSON messages.
 
 ## Installation
 
@@ -14,9 +14,8 @@ Brokered pub/sub based on [zeromq](http://zeromq.org/) and [node-zmq](https://gi
   Broker:
   ```js
   require('zmq-pubsub').broker()
-    .start(11111, 22222); // The default ports are 5000 for XSUB and 5001 for XPUB. They both are **TCP** ports!
+    .start(11111, 22222);
   ```
-
   Subscriber:
   ```js
   require('zmq')
@@ -36,5 +35,5 @@ Brokered pub/sub based on [zeromq](http://zeromq.org/) and [node-zmq](https://gi
   ```
 
 ## TODO
-* publisher, subsciber
+* publisher, subscriber
 * json messages
