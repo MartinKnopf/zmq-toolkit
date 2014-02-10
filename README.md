@@ -5,13 +5,11 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
 
 ## Installation
 
-  **Node.js >=0.10 and zeromq >=4 required**
+  Look at the supported Node and zmq versions [here](http://travis-ci.org/Horsed/zmq-toolkit);
 
     $ npm install zmq-toolkit
 
-## Examples
-
-  Broker:
+## Broker
   ```js
   // pubsub proxy to connect multiple publishers and subscribers
 
@@ -19,7 +17,7 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
     , broker = new Broker().start('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
   ```
 
-  ZmqEventEmitter:
+## ZmqEventEmitter
   ```js
   // zeromq based EventEmitter to connect different Node processes via pubsub
 
@@ -37,17 +35,10 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
   }, 100);
   ```
 
-  Heartbeat publisher:
+## Heartbeat publisher
   ```js
   // periodically emit a ```heartbeat``` event with the given data
 
   var Heartbeat = require('zmq-toolkit').Heartbeat
     , heartbeat = new Heartbeat({name: 'my-app'}).start('tcp://127.0.0.1:11111', 60000); // connect to a broker's XSUB socket
-  ```
-
-  TestBroker:
-  ```js
-  // pubsub broker for use in async tests
-
-  // TBD
   ```
