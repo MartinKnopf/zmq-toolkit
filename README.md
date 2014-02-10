@@ -1,39 +1,53 @@
-zmq-pubsub [![Build Status](https://secure.travis-ci.org/Horsed/zmq-pubsub.png)](http://travis-ci.org/Horsed/zmq-pubsub)
-==========
+zmq-toolkit [![Build Status](https://secure.travis-ci.org/Horsed/zmq-toolkit.png)](http://travis-ci.org/Horsed/zmq-toolkit)
+===========
 
-Brokered pub/sub via **TCP** based on [zeromq](http://zeromq.org/) and [node-zmq](https://github.com/JustinTulloss/zeromq.node) with handling of JSON messages.
+Some helpers for simplified use of [zeromq.node](https://github.com/JustinTulloss/zeromq.node).
 
 ## Installation
 
   **Node.js >=0.10 and zeromq >=4 required**
 
-    $ npm install zmq-pubsub
+    $ npm install zmq-toolkit
 
-### example using [node-zeromq](https://github.com/JustinTulloss/zeromq.node)
+## Examples
 
   Broker:
   ```js
-  require('zmq-pubsub').broker()
-    .start(11111, 22222);
-  ```
-  Subscriber:
-  ```js
-  require('zmq')
-    .socket('sub')
-    .subscribe('myevent')
-    .connect('tcp://127.0.0.1:22222')
-    .on('message', function(msg) {
-      // handle msg
-    });
+  // pubsub proxy to connect multiple publishers and subscribers
+
+  var Broker = require('zmq-toolkit').Broker
+    , broker = new Broker().start('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
   ```
 
-  Publisher:
+  ZmqEventEmitter:
   ```js
-  require('zmq')
-    .socket('pub')
-    .connect('tcp://127.0.0.1:11111');
+  // zeromq based EventEmitter to connect different Node processes via pubsub
+
+  var ZmqEventEmitter = require('zmq-toolkit').ZmqEventEmitter
+    , zee = new ZmqEventEmitter('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222'); // connect to broker
+
+  zee.on('my-event', function(options) {
+    console.log(options.foo);
+  });
+
+  setTimeout(function() { // need some time to connect sockets
+
+    zee.emit('my-event', {foo: 'bar'});
+
+  }, 100);
   ```
 
-## TODO
-* publisher, subscriber
-* json messages
+  Heartbeat publisher:
+  ```js
+  // periodically emit a ```heartbeat``` event with the given data
+
+  var Heartbeat = require('zmq-toolkit').Heartbeat
+    , heartbeat = new Heartbeat({name: 'my-app'}).start('tcp://127.0.0.1:11111', 60000); // connect to a broker's XSUB socket
+  ```
+
+  TestBroker:
+  ```js
+  // pubsub broker for use in async tests
+
+  // TBD
+  ```

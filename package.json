@@ -1,8 +1,8 @@
 {
-  "name": "zmq-pubsub",
-  "version": "0.0.1",
+  "name": "zmq-toolkit",
+  "version": "0.0.2",
   "author": "Horsed",
-  "description": "Publisher, subscriber and broker based on node-zmq",
+  "description": "Some helpers for simplified use of zeromq.node.",
   "private": false,
   "scripts": {
     "test": "mocha"
@@ -13,27 +13,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Horsed/zmq-pubsub.git"
+    "url": "https://github.com/Horsed/zmq-toolkit.git"
   },
   "keywords": [
     "zeromq",
     "pub/sub",
     "json",
     "broker",
-    "publisher",
-    "subscriber"
+    "eventemitter",
+    "heartbeat"
   ],
   "dependencies": {
-    "zmq": "~2.5.1"
+    "zmq": "latest",
+    "lodash": "latest"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-develop": "~0.2.2",
-    "grunt-contrib-watch": "~0.5.3",
-    "time-grunt": "~0.1.1",
-    "load-grunt-tasks": "~0.2.0",
-    "mocha": "~1.15.0",
-    "requirejs": "~2.1.9",
-    "should": "~2.1.0"
+    "mocha": "latest",
+    "should": "latest"
+  },
+  "bugs": {
+    "url": "https://github.com/Horsed/zmq-toolkit/issues"
+  },
+  "homepage": "https://github.com/Horsed/zmq-toolkit",
+  "main": "index.js",
+  "bin": {
+    "zmq-toolkit": "broker.js"
+  },
+  "directories": {
+    "test": "test"
   }
 }
