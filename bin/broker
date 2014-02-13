@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+var app = require('commander');
+
+app
+  .version(require('../package.json').version);
+
+app
+  .command('* <xsub> <xpub>')
+  .description('start the broker at the given sockets')
+  .action(function(xsub, xpub) {
+    var Broker = require('../lib/broker')
+      , broker = new Broker();
+    broker.start(xsub, xpub);
+    console.log('zmq-toolkit Broker started at ' + xsub + ', ' + xpub);
+  });
+
+app.parse(process.argv);

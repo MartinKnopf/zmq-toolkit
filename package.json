@@ -1,6 +1,6 @@
 {
   "name": "zmq-toolkit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Horsed",
   "description": "Some helpers for simplified use of zeromq.node.",
   "private": false,
@@ -25,7 +25,8 @@
   ],
   "dependencies": {
     "zmq": "latest",
-    "lodash": "latest"
+    "lodash": "latest",
+    "commander": "latest"
   },
   "devDependencies": {
     "mocha": "latest",
@@ -37,7 +38,7 @@
   "homepage": "https://github.com/Horsed/zmq-toolkit",
   "main": "index.js",
   "bin": {
-    "zmq-toolkit": "bin/broker.js"
+    "zmqbroker": "bin/broker"
   },
   "directories": {
     "test": "test"

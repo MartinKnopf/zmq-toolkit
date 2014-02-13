@@ -5,13 +5,18 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
 
 ## Installation
 
-  Look at the supported Node and zmq versions [here](http://travis-ci.org/Horsed/zmq-toolkit);
+  Look at the supported Node and zmq versions [here](http://travis-ci.org/Horsed/zmq-toolkit).
 
     $ npm install zmq-toolkit
 
+  To start the broker in its own process:
+
+    $ npm install -g zmq-toolkit
+    $ zmqbroker tcp://127.0.0.1:11111 tcp://127.0.0.1:22222
+
 ## Broker
   ```js
-  // pubsub proxy to connect multiple publishers and subscribers
+  // pubsub proxy that binds to the given XSUB and XPUB sockets
 
   var Broker = require('zmq-toolkit').Broker
     , broker = new Broker().start('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
@@ -19,10 +24,10 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
 
 ## ZmqEventEmitter
   ```js
-  // zeromq based EventEmitter to connect different Node processes via pubsub
+  // zeromq based EventEmitter that connects to Broker
 
   var ZmqEventEmitter = require('zmq-toolkit').ZmqEventEmitter
-    , zee = new ZmqEventEmitter('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222'); // connect to broker
+    , zee = new ZmqEventEmitter('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
 
   zee.on('my-event', function(options) {
     console.log(options.foo);
@@ -37,8 +42,8 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
 
 ## Heartbeat publisher
   ```js
-  // periodically emit a ```heartbeat``` event with the given data
+  // periodically emit a ```heartbeat``` event 
 
   var Heartbeat = require('zmq-toolkit').Heartbeat
-    , heartbeat = new Heartbeat({name: 'my-app'}).start('tcp://127.0.0.1:11111', 60000); // connect to a broker's XSUB socket
+    , heartbeat = new Heartbeat({name: 'my-app'}).start('tcp://127.0.0.1:11111', 60000);
   ```
