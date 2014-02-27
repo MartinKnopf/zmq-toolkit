@@ -14,36 +14,54 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
     $ npm install -g zmq-toolkit
     $ zmqbroker tcp://127.0.0.1:11111 tcp://127.0.0.1:22222
 
-## Broker
+## API
+
+### Broker
   ```js
   // pubsub proxy that binds to the given XSUB and XPUB sockets
 
   var Broker = require('zmq-toolkit').Broker
-    , broker = new Broker().start('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
+    , broker = new Broker()
+      .start('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
   ```
 
-## ZmqEventEmitter
+### ZmqEventEmitter
   ```js
-  // zeromq based EventEmitter that connects to Broker
+  // zeromq based EventEmitter that connects to the zmq broker
 
   var ZmqEventEmitter = require('zmq-toolkit').ZmqEventEmitter
-    , zee = new ZmqEventEmitter('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
-
-  zee.on('my-event', function(options) {
-    console.log(options.foo);
-  });
+    , zee = new ZmqEventEmitter()
+      .start('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222')
+      .on('my-event', function(options) {
+        console.log(options.foo);
+      })
+      .on('my-other-event', function(options) {
+        console.log(options.foo);
+      });
 
   setTimeout(function() { // need some time to connect sockets
-
     zee.emit('my-event', {foo: 'bar'});
-
   }, 100);
   ```
 
-## Heartbeat publisher
+### Connecting socket.io sockets to the zmq broker
   ```js
-  // periodically emit a ```heartbeat``` event 
+  // connect socket.io sockets to a zeromq pubsub broker
+
+  var ZmqEventEmitter = require('zmq-toolkit').ZmqEventEmitter
+    , zee = new ZmqEventEmitter()
+      .start('tcp://127.0.0.1:11111', 'tcp://127.0.0.1:22222');
+
+  io.sockets.on('connection', function (socket) {
+    zee.hug(socket);
+  });
+  ```
+
+### Heartbeat publisher
+  ```js
+  // periodically emit a ```heartbeat``` event with arbitrary data to the zmq broker
 
   var Heartbeat = require('zmq-toolkit').Heartbeat
-    , heartbeat = new Heartbeat({name: 'my-app'}).start('tcp://127.0.0.1:11111', 60000);
+    , heartbeat = new Heartbeat({name: 'my-app'})
+      .start('tcp://127.0.0.1:11111', 60000);
   ```

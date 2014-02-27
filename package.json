@@ -1,6 +1,6 @@
 {
   "name": "zmq-toolkit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Horsed",
   "description": "Some helpers for simplified use of zeromq.node.",
   "private": false,
@@ -21,12 +21,17 @@
     "json",
     "broker",
     "eventemitter",
+    "socket.io",
     "heartbeat"
   ],
   "dependencies": {
     "zmq": "latest",
     "lodash": "latest",
-    "commander": "latest"
+    "commander": "latest",
+    "socket.io": "~0.9.16",
+    "chai": "~1.9.0",
+    "sinon-chai": "~2.5.0",
+    "sinon": "~1.8.2"
   },
   "devDependencies": {
     "mocha": "latest",
