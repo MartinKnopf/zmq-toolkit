@@ -27,7 +27,7 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
 
 ### ZmqEventEmitter
   ```js
-  // zeromq based EventEmitter that connects to the zmq broker
+  // zeromq based EventEmitter that connects to the zeromq xpub/xsub broker
 
   var ZmqEventEmitter = require('zmq-toolkit').ZmqEventEmitter
     , zee = new ZmqEventEmitter()
@@ -46,7 +46,7 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
 
 ### Connecting socket.io sockets to the zmq broker
   ```js
-  // connect socket.io sockets to a zeromq pubsub broker
+  // connect socket.io sockets to a zeromq xpub/xsub broker
 
   var ZmqEventEmitter = require('zmq-toolkit').ZmqEventEmitter
     , zee = new ZmqEventEmitter()
@@ -54,14 +54,21 @@ Some helpers for simplified use of [zeromq.node](https://github.com/JustinTullos
 
   io.sockets.on('connection', function (socket) {
     zee.hug(socket);
+
+    socket.emit('foo'); // will be forwared to zee
+
+    socket.on('bar', function() {
+      console.log('baz');
+    });
+    zee.emit('bar'); // will invoke the websocket's handler for this event
   });
   ```
 
 ### Heartbeat publisher
   ```js
-  // periodically emit a ```heartbeat``` event with arbitrary data to the zmq broker
+  // periodically emit a ```heartbeat``` event with arbitrary data to a zeromq xpub/xsub broker
 
   var Heartbeat = require('zmq-toolkit').Heartbeat
     , heartbeat = new Heartbeat({name: 'my-app'})
-      .start('tcp://127.0.0.1:11111', 60000);
+      .start('tcp://127.0.0.1:11111', 60000); // connet to xsub socket, emit every 60 seconds
   ```

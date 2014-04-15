@@ -25,7 +25,7 @@
     "heartbeat"
   ],
   "dependencies": {
-    "zmq": "latest",
+    "zmq": "2.6.0",
     "lodash": "latest",
     "commander": "latest",
     "socket.io": "~0.9.16",

@@ -34,9 +34,9 @@ describe('[testZmqEventEmitter.js] ZmqEventEmitter', function() {
     });
   });
 
-  describe('Wrapping a socket.io socket', function() {
+  describe('Wrapping a websocket', function() {
 
-    it('should replace the socket\'s original emit function', function() {
+    it('should replace the websocket\'s original emit function', function() {
 
       var socket = new EventEmitter()
         , emit = socket.emit
@@ -46,9 +46,20 @@ describe('[testZmqEventEmitter.js] ZmqEventEmitter', function() {
 
       emit.should.not.eql(socket.emit);
     });
+
+    it('should replace the websocket\'s original on function', function() {
+
+      var socket = new EventEmitter()
+        , on = socket.on
+        , zee = new ZmqEventEmitter().start('tcp://127.0.0.1:7000', 'tcp://127.0.0.1:7001');
+
+      zee.hug(socket);
+
+      on.should.not.eql(socket.on);
+    });
   });
 
-  describe('When event on a wrapped socket.io socket is fired', function() {
+  describe('When event on a wrapped websocket is fired', function() {
 
     it('should forward to zmq broker', function(done) {
 
@@ -63,6 +74,25 @@ describe('[testZmqEventEmitter.js] ZmqEventEmitter', function() {
 
       setTimeout(function() {
         socket.emit('bar');
+      }, 100.0);
+    });
+  });
+
+  describe('When event on a wrapping zee is fired', function() {
+
+    it('should forward to websocket', function(done) {
+
+      var socket = new EventEmitter()
+        , zee = new ZmqEventEmitter().start('tcp://127.0.0.1:7000', 'tcp://127.0.0.1:7001');
+
+      zee.hug(socket);
+
+      socket.on('bar', function() {
+        done();
+      });
+
+      setTimeout(function() {
+        zee.emit('bar');
       }, 100.0);
     });
   });
